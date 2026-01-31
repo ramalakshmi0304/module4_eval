@@ -12,13 +12,13 @@ if(!owner_id)
     return res.status(401).json("owner_id is required to create vehicle")
 
 if (owner_id ===! users2.id)
-    return res.status(403).json("access denied")
+    return res.status(403).json("access denied");
 
 const{data,error}= await supabase
 .from("users2")
 .insert([{
 name,
-registration_number,
+registation_number,
 rate_per_km,
 }]);
 
@@ -34,8 +34,27 @@ res.status(201).json({message:"vehicle created"},data)
 
 export const assignDriver= async(req,res)=>{
      try{
+    const{name,driverid}=req.body
 
-    {}
+const{data,error}= await supabasee
+.from("vehicles")
+.select("*")
+.eq("driver_id",driverid)
+.single();
+
+if (!driver_id)
+return res.status(404).json({message:"driver not found"})
+
+await supabase
+.from("vehicles")
+.select("*")
+.update("driver_id", driverid)
+.single();
+
+if(error)
+    return res.status(500).json ({message: "internal server error"});
+res.status(201).json({message:"driver assigned0"})
+
 
 } catch (err) {
         res.status(500).json({ error: err.message })

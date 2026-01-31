@@ -3,11 +3,11 @@ import dotenv from "dotenv"
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT||3330;
 
 app.use("/user",userRoutes)
 app.use("/vehicles",vehicleRoutes)
-app.use("/trip",tripRoutes)
+app.use("/trips",tripRoutes)
 app.use("analytics", analyticsRoutes)
 
 
